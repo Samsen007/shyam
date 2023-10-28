@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>VIT Event Registration</title>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <img src="logo1.png" alt="Your Logo">
+    </div>
+    <div class="header-text">
+      <h1>&nbsp;VIT</h1>
+    </div>
+    &nbsp;&nbsp;&nbsp;&nbsp;(vellore campus)
+    <div class="text1">VIT Event Registration Form</div>
+  </header>
+  <form id="registrationForm" onsubmit="return validateForm()">
+    <input type="text" id="fullName" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <input type="tel" id="mobile" placeholder="Mobile Number" required>
+    <input type="text" id="zipcode" placeholder="Zip Code" required>
+    <span class="error" id="errorDisplay"></span>
+    <input type="submit" value="Register">
+  </form>
+
+  <script>
+    function validateForm() {
+      // Retrieving form values
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const mobile = document.getElementById('mobile').value.trim();
+      const zipcode = document.getElementById('zipcode').value.trim();
+      const errorDisplay = document.getElementById('errorDisplay');
+
+      // Regular expressions for validation
+      const zipRegex = /^\d{5}$/;
+      const vitEmailRegex = /^[a-zA-Z0-9._%+-]+@vit\.ac\.in$/;
+      const passwordLengthRegex = /^.{10,100}$/;
+      const passwordUniqueCharRegex = /^(?:([\s\S])(?!.*\1)){5,}$/;
+      const passwordCriteriaRegex = /^(?=(.*[a-z]){1,})(?=(.*[A-Z]){1,})(?=(.*[0-9]){1,})(?=(.*[~!@#$%^*-_+=\[{\\\]}/;:,.?]){1,})/;
+      const mobileRegex = /^\d{10}$/;
+
+      // Validation checks
+      if (fullName === '' || email === '' || password === '' || mobile === '' || zipcode === '') {
+        errorDisplay.textContent = 'All fields are mandatory';
+        return false;
+      }
+
+      if (!zipRegex.test(zipcode)) {
+        errorDisplay.textContent = 'Zip code should be exactly five digits';
+        return false;
+      }
+
+      if (!vitEmailRegex.test(email)) {
+        errorDisplay.textContent = 'Email validation allows only VIT mails';
+        return false;
+      }
+
+      if (!passwordLengthRegex.test(password) || !passwordUniqueCharRegex.test(password) || !passwordCriteriaRegex.test(password)) {
+        errorDisplay.textContent = 'Password must contain uppercase, lowercase, numeric, or special characters';
+        return false;
+      }
+
+      if (!mobileRegex.test(mobile)) {
+        errorDisplay.textContent = 'Mobile number should be 10 digits only';
+        return false;
+      }
+
+      errorDisplay.textContent = ''; // Clear any previous error message
+      return true; // Form is valid
+    }
+  </script>
+  <footer class="footercolor">
+    Copyright &copy; 2023 SHYAM.V 21MID0232, VIT, Vellore-632 014.
+  </footer>
+</body>
+</html>
